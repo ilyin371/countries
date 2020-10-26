@@ -22,9 +22,9 @@ public class RestCountriesClient implements CountriesProvider {
 
     @Override
     public Flux<Country> getCountries(RegionalBloc region) {
-            return this.client.get()
-                    .retrieve()
-                    .bodyToFlux(CountryRecord.class)
-                    .map(mapper::map);
+        return this.client.get()
+                .retrieve()
+                .bodyToFlux(CountryRecord.class)
+                .map(mapper::map);
     }
 }

@@ -16,9 +16,7 @@ public class Units {
     public static final BaseUnit<Dimensionless> NONE = new BaseUnit<>("n/a");
 
     private static final Unit<Length> KILOMETER = MetricPrefix.KILO(tech.units.indriya.unit.Units.METRE);
-
     public static final Unit<Area> SQUARE_KILOMETER = KILOMETER.multiply(KILOMETER).asType(Area.class);
-
     public static final Unit<PopulationDensity> PEOPLE_PER_SQUARE_KILOMETER = PEOPLE.divide(SQUARE_KILOMETER)
             .asType(PopulationDensity.class);
 

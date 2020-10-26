@@ -19,7 +19,7 @@ public class CountryFilters {
             Field.CURRENCY_CODE, this::currencyCodeFilter
     );
 
-    public Predicate<Country> composeFilters(List<Filter> params){
+    public Predicate<Country> composeFilters(List<Filter> params) {
         val predicate = params.stream()
                 .map(param -> filtersMap.get(param.getField()).get(param.getValue()))
                 .reduce(country -> true, Predicate::and);

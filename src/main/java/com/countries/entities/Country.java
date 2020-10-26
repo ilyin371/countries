@@ -11,10 +11,8 @@ import lombok.val;
 import tech.units.indriya.ComparableQuantity;
 import tech.units.indriya.quantity.Quantities;
 
-import javax.measure.Quantity;
 import javax.measure.Unit;
 import javax.measure.quantity.Area;
-import java.util.Optional;
 import java.util.Set;
 
 import static com.countries.entities.measure.Units.PEOPLE;

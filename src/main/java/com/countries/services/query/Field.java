@@ -9,7 +9,7 @@ public enum Field {
     CURRENCY_CODE("currencyCode"),
     CURRENCY_NAME("currencyName");
 
-    private String name;
+    private final String name;
 
     Field(String name) {
         this.name = name;

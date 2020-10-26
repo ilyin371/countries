@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RestCountryMapperTest {
 
-    private RestCountryMapper mapper = Mappers.getMapper(RestCountryMapper.class);
+    private final RestCountryMapper mapper = Mappers.getMapper(RestCountryMapper.class);
 
     @Test
     void map() {

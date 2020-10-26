@@ -26,6 +26,7 @@ public class QueryParser {
     private final String ORDER_ASC = "asc";
     private final String ORDER_DESC = "desc";
     private final String LIMIT = "limit";
+
     Map<Field, String> fieldToParam = Map.ofEntries(
             entry(Field.NAME, "name"),
             entry(Field.CAPITAL, "capital"),

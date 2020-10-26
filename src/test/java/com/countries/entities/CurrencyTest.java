@@ -33,6 +33,6 @@ class CurrencyTest {
     @Test
     void shouldThrowOnInvalidCode() {
         assertThatThrownBy(() -> Currency.of("INVALID"))
-            .isInstanceOf(InvalidCurrencyException.class);
-        }
+                .isInstanceOf(InvalidCurrencyException.class);
     }
+}

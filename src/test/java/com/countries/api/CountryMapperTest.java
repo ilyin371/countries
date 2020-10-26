@@ -12,7 +12,7 @@ import static com.countries.entities.measure.QuantityUtils.area;
 
 class CountryMapperTest {
 
-    private CountryMapper mapper = Mappers.getMapper(CountryMapper.class);
+    private final CountryMapper mapper = Mappers.getMapper(CountryMapper.class);
 
     @Test
     void map() {

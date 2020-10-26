@@ -21,7 +21,7 @@ public class CountriesService {
     private final CountryFilters filters;
     private final CountrySort sort;
 
-    private RegionalBloc region = RegionalBloc.EU;
+    private final static RegionalBloc region = RegionalBloc.EU;
 
     public Flux<Country> getTopByPopulationDensity(Optional<Integer> limit) {
         val query = new Query()

@@ -1,6 +1,5 @@
 package com.countries.entities.measure;
 
-import lombok.val;
 import org.springframework.lang.Nullable;
 import tech.units.indriya.ComparableQuantity;
 import tech.units.indriya.quantity.Quantities;
@@ -18,7 +17,7 @@ public class QuantityUtils {
 
     @SuppressWarnings("unchecked")
     public static <T extends Quantity<T>> ComparableQuantity<T> emptyQuantity(Unit<T> unit) {
-        return (ComparableQuantity<T>) Quantities.getQuantity(0.0, unit);
+        return Quantities.getQuantity(0.0, unit);
     }
 
     public static <T extends Quantity<T>> Optional<Quantity<T>> maybe(Quantity<T> quantity) {
