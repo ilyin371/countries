@@ -1,6 +1,7 @@
 package com.countries.services;
 
 import com.countries.entities.Country;
+import com.countries.entities.currency.Currency;
 import com.countries.entities.Units;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,6 @@ import reactor.core.publisher.Flux;
 import tech.units.indriya.quantity.Quantities;
 
 import java.util.Arrays;
-import java.util.Currency;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,7 +29,7 @@ class CountriesServiceTest {
         return new Country(name, "Capital", 1,
                 Quantities.getQuantity(1, Units.SQUARE_KILOMETER),
                 currencies.stream()
-                        .map(Currency::getInstance)
+                        .map(Currency::of)
                         .collect(Collectors.toSet()));
     }
 
@@ -84,7 +84,7 @@ class CountriesServiceTest {
     @ParameterizedTest
     @CsvSource(value = {
             "DKK; Denmark",
-            "GIP; Isle of Man",
+            "IMP; Isle of Man",
             "GBP; Isle of Man, United Kingdom",
             "EUR; Latvia, Italy"
     }, delimiter = ';')
@@ -92,7 +92,7 @@ class CountriesServiceTest {
 
         final CountriesProvider countriesProvider = region -> Flux.just(
                 country("Denmark", Set.of("DKK")),
-                country("Isle of Man", Set.of("GIP", "GBP")),
+                country("Isle of Man", Set.of("IMP", "GBP")),
                 country("United Kingdom", Set.of("GBP")),
                 country("Latvia", Set.of("EUR")),
                 country("Italy", Set.of("EUR"))
@@ -100,7 +100,7 @@ class CountriesServiceTest {
 
         val service = new CountriesService(countriesProvider);
 
-        val actual = service.findByCurrency(Currency.getInstance(currency))
+        val actual = service.findByCurrency(Currency.of(currency))
                 .collectList()
                 .block();
 

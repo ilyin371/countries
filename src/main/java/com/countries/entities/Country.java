@@ -1,5 +1,6 @@
 package com.countries.entities;
 
+import com.countries.entities.currency.Currency;
 import lombok.ToString;
 import lombok.Value;
 import lombok.val;
@@ -8,7 +9,6 @@ import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import javax.measure.quantity.Area;
-import java.util.Currency;
 import java.util.Set;
 
 import static com.countries.entities.Units.PEOPLE;
