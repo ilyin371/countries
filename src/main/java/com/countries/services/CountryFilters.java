@@ -32,7 +32,7 @@ public class CountryFilters {
     }
 
     private Predicate<Country> currencyCodeFilter(String currencyCode) {
-        val currency = Currency.of(currencyCode);
+        val currency = Currency.of(currencyCode.toUpperCase());
         return country -> country.getCurrencies().contains(currency);
     }
 

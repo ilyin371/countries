@@ -4,6 +4,7 @@ import com.countries.entities.Country;
 import com.countries.entities.RegionalBloc;
 import com.countries.services.query.Field;
 import com.countries.services.query.Query;
+import com.countries.services.query.Settings;
 import com.countries.services.query.SortOrder;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -16,8 +17,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CountriesService {
 
-    private final static int DEFAULT_LIMIT = 100;
-
     private final CountriesProvider provider;
     private final CountryFilters filters;
     private final CountrySort sort;
@@ -28,7 +27,7 @@ public class CountriesService {
         val query = new Query()
                 .withSortBy(Field.POPULATION_DENSITY)
                 .withOrder(SortOrder.DESC)
-                .withLimit(limit.orElse(DEFAULT_LIMIT));
+                .withLimit(limit.orElse(Settings.DEFAULT_LIMIT));
 
         return getCountries(query);
     }
@@ -43,7 +42,7 @@ public class CountriesService {
         return getCountries(query);
     }
 
-    private Flux<Country> getCountries(Query query) {
+    public Flux<Country> getCountries(Query query) {
 
         val predicate = filters.composeFilters(query.getFilters());
         val comparator = sort.getComparator(query.getSortBy(), query.getOrder());
