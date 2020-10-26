@@ -59,6 +59,13 @@
 			<version>${mapstruct.version}</version>
 		</dependency>
 
+		<!-- springdoc ui -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-ui</artifactId>
+			<version>1.4.8</version>
+		</dependency>
+
 
 <!--	Test Dependencies	-->
 
