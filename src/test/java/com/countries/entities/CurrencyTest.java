@@ -1,7 +1,7 @@
 package com.countries.entities;
 
 import com.countries.entities.currency.Currency;
-import com.countries.entities.currency.InvalidCurrencyCodeException;
+import com.countries.entities.currency.InvalidCurrencyException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +33,6 @@ class CurrencyTest {
     @Test
     void shouldThrowOnInvalidCode() {
         assertThatThrownBy(() -> Currency.of("INVALID"))
-            .isInstanceOf(InvalidCurrencyCodeException.class);
+            .isInstanceOf(InvalidCurrencyException.class);
         }
     }

@@ -2,7 +2,7 @@ package com.countries.services;
 
 import com.countries.entities.Country;
 import com.countries.entities.currency.Currency;
-import com.countries.entities.Units;
+import com.countries.entities.measure.Units;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -8,12 +8,16 @@ import lombok.val;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Value
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Currency {
     private static Map<String, Currency> instances = new HashMap<>();
+    private static Set<String> isoCurrencyCodes = java.util.Currency.getAvailableCurrencies().stream()
+            .map(java.util.Currency::getCurrencyCode)
+            .collect(Collectors.toSet());
 
     static {
         val currenciesWithUnofficialCode = List.of(
@@ -40,15 +44,21 @@ public class Currency {
         return currency;
     }
 
+    public static Currency ofName(String name) {
+        return instances.values().stream()
+                .filter(currency -> currency.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new InvalidCurrencyException(name));
+    }
+
     public static boolean isValidCode(String code) {
-        return instances.containsKey(code);
+        return isoCurrencyCodes.contains(code) || instances.containsKey(code);
     }
 
     private static java.util.Currency getIsoCurrency(String code) {
-        try {
+        if (isValidCode(code)) {
             return java.util.Currency.getInstance(code);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidCurrencyCodeException(code);
         }
+        throw new InvalidCurrencyException(code);
     }
 }

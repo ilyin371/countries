@@ -6,7 +6,7 @@ import tech.units.indriya.quantity.Quantities;
 
 import java.util.Set;
 
-import static com.countries.entities.Units.SQUARE_KILOMETER;
+import static com.countries.entities.measure.Units.SQUARE_KILOMETER;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class CountryTest {
