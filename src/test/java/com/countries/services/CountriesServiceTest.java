@@ -11,6 +11,7 @@ import tech.units.indriya.quantity.Quantities;
 
 import java.util.Arrays;
 import java.util.Currency;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,6 +31,12 @@ class CountriesServiceTest {
                 currencies.stream()
                         .map(Currency::getInstance)
                         .collect(Collectors.toSet()));
+    }
+
+    private static Country country(String name) {
+        return new Country(name, "Capital", 1,
+                Quantities.getQuantity(1, Units.SQUARE_KILOMETER),
+                Set.of());
     }
 
     @Test
@@ -100,6 +107,42 @@ class CountriesServiceTest {
         val expected = Arrays.stream(countries.split(","))
                 .map(String::trim)
                 .toArray(String[]::new);
+
+        assertThat(actual).extracting("name").containsOnly(expected);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "s*N; Sweden, Spain",
+            "dEnmArK; Denmark",
+            "*pain; Spain",
+            "*; Denmark, Sweden, Spain",
+            "*N*; Denmark, Sweden, Spain",
+            "*EN*; Denmark, Sweden",
+            "*Z*;",
+    }, delimiter = ';')
+    void findByName(String name, String countries) {
+
+        val allCountries = List.of(
+                "Denmark",
+                "Sweden",
+                "Spain"
+        );
+        final CountriesProvider countriesProvider = region -> Flux.just(allCountries.stream()
+                .map(CountriesServiceTest::country)
+                .toArray(Country[]::new));
+
+        val service = new CountriesService(countriesProvider);
+
+        val actual = service.findByName(name)
+                .collectList()
+                .block();
+
+        val expected = Optional.ofNullable(countries)
+                .map(countriesString -> Arrays.stream(countriesString.split(","))
+                        .map(String::trim)
+                        .toArray(String[]::new))
+                .orElse(new String[0]);
 
         assertThat(actual).extracting("name").containsOnly(expected);
     }
