@@ -1,45 +1,58 @@
 package com.countries.services;
 
 import com.countries.entities.Country;
-import com.countries.entities.currency.Currency;
 import com.countries.entities.RegionalBloc;
+import com.countries.services.query.Field;
+import com.countries.services.query.Query;
+import com.countries.services.query.SortOrder;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
-import java.util.Comparator;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CountriesService {
 
-    private final static int DEFAULT_LIMIT = 10;
+    private final static int DEFAULT_LIMIT = 100;
 
     private final CountriesProvider provider;
-    private final RegionalBloc region = RegionalBloc.EU;
+    private final CountryFilters filters;
+    private final CountrySort sort;
 
-    public CountriesService(CountriesProvider provider) {
-        this.provider = provider;
+    private RegionalBloc region = RegionalBloc.EU;
+
+    public Flux<Country> getTopByPopulationDensity(Optional<Integer> limit) {
+        val query = new Query()
+                .withSortBy(Field.POPULATION_DENSITY)
+                .withOrder(SortOrder.DESC)
+                .withLimit(limit.orElse(DEFAULT_LIMIT));
+
+        return getCountries(query);
     }
 
-    Flux<Country> getTopByPopulationDensity(Optional<Integer> limit) {
-        return getCountries()
-                .sort(Comparator.comparing(Country::getPopulationDensity).reversed())
-                .take(limit.orElse(DEFAULT_LIMIT));
+    public Flux<Country> findByCurrencyCode(String currencyCode) {
+        val query = Query.withFilter(Field.CURRENCY_CODE, currencyCode);
+        return getCountries(query);
     }
 
-    Flux<Country> findByCurrency(Currency currency) {
-        return getCountries()
-                .filter(country -> country.getCurrencies().contains(currency));
+    public Flux<Country> findByName(String namePattern) {
+        val query = Query.withFilter(Field.NAME, namePattern);
+        return getCountries(query);
     }
 
-    Flux<Country> findByName(String namePattern) {
-        val regex = "(?i)" + namePattern.replaceAll("\\*", ".*");
-        return getCountries()
-                .filter(country -> country.getName().matches(regex));
-    }
+    private Flux<Country> getCountries(Query query) {
 
-    private Flux<Country> getCountries() {
-        return provider.getCountries(region);
+        val predicate = filters.composeFilters(query.getFilters());
+        val comparator = sort.getComparator(query.getSortBy(), query.getOrder());
+
+        return provider.getCountries(region)
+                .filter(predicate)
+                .sort(comparator)
+                .take(query.getLimit());
     }
 }
+
+

@@ -1,26 +1,23 @@
 package com.countries.adapters.restcountries;
 
+import com.countries.adapters.restcountries.dto.CountryRecord;
+import com.countries.adapters.restcountries.dto.CurrencyRecord;
 import com.countries.entities.Country;
-import com.countries.entities.measure.QuantityUtils;
-import com.countries.entities.measure.Units;
 import com.countries.entities.currency.Currency;
+import com.countries.entities.measure.QuantityUtils;
 import org.mapstruct.Mapper;
 import org.springframework.lang.Nullable;
-import tech.units.indriya.quantity.Quantities;
+import tech.units.indriya.ComparableQuantity;
 
-import javax.measure.Quantity;
 import javax.measure.quantity.Area;
-import java.util.Optional;
 
 @Mapper(componentModel = "spring")
-public abstract class CountryMapper {
+public abstract class RestCountryMapper {
 
     abstract Country map(CountryRecord source);
 
-    Quantity<Area> mapArea(@Nullable Integer areaOrNull) {
-        return Optional.ofNullable(areaOrNull)
-                .map(area -> Quantities.getQuantity(area, Units.SQUARE_KILOMETER))
-                .orElse(QuantityUtils.emptyQuantity());
+    ComparableQuantity<Area> mapArea(@Nullable Double area) {
+        return QuantityUtils.area(area);
     }
 
     Currency mapCurrency(CurrencyRecord currency) {

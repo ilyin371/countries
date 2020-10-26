@@ -2,6 +2,7 @@ package com.countries.entities;
 
 import com.countries.entities.currency.Currency;
 import com.countries.entities.measure.QuantityUtils;
+import com.countries.entities.measure.Units;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,7 @@ public class Country {
     String name;
     String capital;
     int population;
-    Quantity<Area> area;
+    ComparableQuantity<Area> area;
     Set<Currency> currencies;
 
     @ToString.Include(name = "populationDensity")
@@ -43,6 +44,6 @@ public class Country {
 
                     return density;
                 })
-                .orElse(QuantityUtils.emptyQuantity());
+                .orElse(QuantityUtils.emptyQuantity(Units.PEOPLE_PER_SQUARE_KILOMETER));
     }
 }

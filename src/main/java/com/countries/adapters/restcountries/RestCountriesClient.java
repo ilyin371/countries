@@ -1,5 +1,6 @@
 package com.countries.adapters.restcountries;
 
+import com.countries.adapters.restcountries.dto.CountryRecord;
 import com.countries.entities.Country;
 import com.countries.entities.RegionalBloc;
 import com.countries.services.CountriesProvider;
@@ -10,12 +11,12 @@ import reactor.core.publisher.Flux;
 @Service
 public class RestCountriesClient implements CountriesProvider {
 
-    private final CountryMapper mapper;
+    private final RestCountryMapper mapper;
 
     // TODO: extract service URL to config
     private final WebClient client = WebClient.create("https://restcountries.eu/rest/v2/regionalbloc/eu?fields=name;capital;currencies;population;area");
 
-    public RestCountriesClient(CountryMapper mapper) {
+    public RestCountriesClient(RestCountryMapper mapper) {
         this.mapper = mapper;
     }
 

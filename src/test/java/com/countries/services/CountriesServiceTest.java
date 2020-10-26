@@ -20,6 +20,9 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 class CountriesServiceTest {
 
+    private final CountryFilters filters = new CountryFilters();
+    private final CountrySort sort = new CountrySort();
+
     private static Country country(String name, int population, int areaSqKm) {
         return new Country(name, "Capital", population,
                 Quantities.getQuantity(areaSqKm, Units.SQUARE_KILOMETER), Set.of());
@@ -48,7 +51,7 @@ class CountriesServiceTest {
                 country("Estonia", 1315944, 45227)
         );
 
-        val service = new CountriesService(countries);
+        val service = new CountriesService(countries, filters, sort);
 
         val top = service.getTopByPopulationDensity(Optional.empty())
                 .collectList()
@@ -69,7 +72,7 @@ class CountriesServiceTest {
                 country("Estonia", 1315944, 45227)
         );
 
-        val service = new CountriesService(countries);
+        val service = new CountriesService(countries, filters, sort);
 
         val top = service.getTopByPopulationDensity(Optional.of(2))
                 .collectList()
@@ -98,9 +101,9 @@ class CountriesServiceTest {
                 country("Italy", Set.of("EUR"))
         );
 
-        val service = new CountriesService(countriesProvider);
+        val service = new CountriesService(countriesProvider, filters, sort);
 
-        val actual = service.findByCurrency(Currency.of(currency))
+        val actual = service.findByCurrencyCode(currency)
                 .collectList()
                 .block();
 
@@ -132,7 +135,7 @@ class CountriesServiceTest {
                 .map(CountriesServiceTest::country)
                 .toArray(Country[]::new));
 
-        val service = new CountriesService(countriesProvider);
+        val service = new CountriesService(countriesProvider, filters, sort);
 
         val actual = service.findByName(name)
                 .collectList()

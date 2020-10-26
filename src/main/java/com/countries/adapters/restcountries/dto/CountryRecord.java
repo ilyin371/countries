@@ -1,4 +1,4 @@
-package com.countries.adapters.restcountries;
+package com.countries.adapters.restcountries.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +16,6 @@ public class CountryRecord {
     private int population;
 
     @Nullable
-    private Integer area;
+    private Double area;
     private List<CurrencyRecord> currencies;
 }

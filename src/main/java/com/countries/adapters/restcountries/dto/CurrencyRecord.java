@@ -1,4 +1,4 @@
-package com.countries.adapters.restcountries;
+package com.countries.adapters.restcountries.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

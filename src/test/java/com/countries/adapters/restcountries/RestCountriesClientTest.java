@@ -1,7 +1,5 @@
 package com.countries.adapters.restcountries;
 
-import com.countries.adapters.restcountries.CountryMapper;
-import com.countries.adapters.restcountries.RestCountriesClient;
 import com.countries.entities.RegionalBloc;
 import lombok.val;
 import org.junit.jupiter.api.Disabled;
@@ -16,7 +14,7 @@ class RestCountriesClientTest {
     @Test
     @Disabled
     void getCountries() {
-        val mapper = Mappers.getMapper(CountryMapper.class);
+        val mapper = Mappers.getMapper(RestCountryMapper.class);
         val service = new RestCountriesClient(mapper);
         val result = service.getCountries(RegionalBloc.EU)
                 .collect(Collectors.toList())

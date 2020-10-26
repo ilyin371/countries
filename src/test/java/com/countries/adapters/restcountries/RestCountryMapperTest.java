@@ -1,5 +1,7 @@
 package com.countries.adapters.restcountries;
 
+import com.countries.adapters.restcountries.dto.CountryRecord;
+import com.countries.adapters.restcountries.dto.CurrencyRecord;
 import com.countries.entities.measure.QuantityUtils;
 import com.countries.entities.measure.Units;
 import lombok.val;
@@ -10,9 +12,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CountryMapperTest {
+class RestCountryMapperTest {
 
-    private CountryMapper mapper = Mappers.getMapper(CountryMapper.class);
+    private RestCountryMapper mapper = Mappers.getMapper(RestCountryMapper.class);
 
     @Test
     void map() {
@@ -20,7 +22,7 @@ class CountryMapperTest {
                 "Portugal",
                 "Lisbon",
                 10374822,
-                92090,
+                92090.0,
                 List.of(new CurrencyRecord("EUR", "Euro", "E")));
 
         val result = mapper.map(source);
