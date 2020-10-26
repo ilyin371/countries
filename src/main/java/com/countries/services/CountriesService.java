@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.util.Comparator;
+import java.util.Currency;
 import java.util.Optional;
 
 @Service
@@ -23,5 +24,10 @@ public class CountriesService {
         return provider.getCountries(RegionalBloc.EU)
                 .sort(Comparator.comparing(Country::getPopulationDensity).reversed())
                 .take(limit.orElse(DEFAULT_LIMIT));
+    }
+
+    Flux<Country> findByCurrency(Currency currency){
+        return provider.getCountries(RegionalBloc.EU)
+                .filter(country -> country.getCurrencies().contains(currency));
     }
 }

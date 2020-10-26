@@ -8,6 +8,7 @@ import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import javax.measure.quantity.Area;
+import java.util.Currency;
 import java.util.Set;
 
 import static com.countries.entities.Units.PEOPLE;
