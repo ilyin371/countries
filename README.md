@@ -31,3 +31,14 @@ Required use cases examples:
  * All the countries that correspond to a given pattern: 
     *  [/countries/Spain](http://localhost:8080/countries/Spain) 
     *  [/countries/S*n](http://localhost:8080/countries/S*n) 
+    
+## TODO
+
+  - [ ] Unit test HTTP request params to internal API mapping.
+  - [ ] Cache external service response.
+  - [ ] Add circuit breaker to external service adapter.
+  - [ ] Map exceptions to HTTP response codes.
+  - [ ] Request params validation.
+  - [ ] Add sorting/filtering params to `countries/{name}` path.
+  - [ ] Integration tests.
+  - [ ] Optional: try embedded reactive CRUD repository instead of custom stream based collection filtering/sorting.
